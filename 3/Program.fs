@@ -38,15 +38,26 @@ let symbols =
     |> List.where (fun l -> not l.IsEmpty)
     |> List.collect id
 
-let result =
+let result0 =
     (symbols, numbers)
     ||> List.allPairs
-    // |> List.where (fun (s, n) -> s.Token = "*" && n.Token = "994")
     |> List.where (fun x -> x ||> isSymbolAdjacentNumber)
+
+let result1 =
+    result0
     |> List.sort
     |> List.map snd
     |> List.distinct
-    // |> List.where (fun l -> l.Token="67")
     |> List.sumBy (fun n -> Int32.Parse n.Token)
 
-printfn $"%A{result}"
+printfn $"%A{result1}"
+
+let result2 =
+    (result0 |> List.where (fun (s, _) -> s.Token = "*"), numbers)
+    ||> List.allPairs
+    |> List.where (fun ((_, n1), n2) -> n1 <> n2)
+    |> List.where (fun ((s, _), n2) -> isSymbolAdjacentNumber s n2)
+    |> List.map (fun ((_, n1), n2) -> (Int32.Parse n1.Token) * (Int32.Parse n2.Token))
+    |> List.sum
+
+printfn $"%A{result2/2}"
