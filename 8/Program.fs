@@ -1,7 +1,8 @@
 ﻿open System
 open System.Text.RegularExpressions
 
-type Node = string
+type Node =
+    | Node of string
 
 type Direction =
     | L
@@ -39,12 +40,24 @@ let instruction, nodes =
 
 printfn $"%A{nodes}"
 
-let move (n:Node) (d:Direction) =
+
+let step1 (n:Node) (d:Direction) =
     match d with
     | L -> left nodes.[n]
     | _ -> right nodes.[n]
-let doInstruction =
-    instruction
-    |> Seq.fold move (Node "AAA")
 
-printfn $"%A{doInstruction}"
+let walkFrom (n:Node)=
+    instruction
+    |> Seq.fold step1 n
+    
+let goalNode = (Node "ZZZ")
+
+let rec walkToGoal (i:int) (n:Node) =
+    match n with
+    | Node "ZZZ" -> i
+    | _ -> walkToGoal (i+1) (walkFrom n)
+
+let result =
+    walkToGoal 0 (Node "AAA")
+
+printfn $"%A{result * (instruction |> Seq.length)}"
