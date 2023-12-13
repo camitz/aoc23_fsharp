@@ -132,7 +132,7 @@ let distanceToZ =
     |> List.map bigint
     |> List.sum
 
-let result1 = (cycleLengths * (bigint l)) + distanceToZ
+let result1 = ((cycleLengths) * (bigint l)) + distanceToZ
 printfn $"%A{cycleLengths}"
 printfn $"%A{distanceToZ}"
 printfn $"%A{(cycleLengths * (bigint l))}" //<--- this is the right answer for some reason
