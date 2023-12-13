@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <Compile Include="Program.fs" />
+        <Compile Include="Program_compact.fs" />
         <Content Include="testinput.txt" />
         <Content Include="input.txt" />
     </ItemGroup>
